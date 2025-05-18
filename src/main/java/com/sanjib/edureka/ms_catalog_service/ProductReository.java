@@ -7,6 +7,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ProductReository extends JpaRepository<Product, Integer> {
 	
+	public Product findProductByProductId(Integer productId);
+	
 	
 	//public List<Product> getAllProductsInACategory(@Param("catenum") CategoryEnum catenum);
 	

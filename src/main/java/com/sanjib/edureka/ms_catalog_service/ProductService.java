@@ -1,10 +1,10 @@
 package com.sanjib.edureka.ms_catalog_service;
 
-import java.util.List;
-
 public interface ProductService {
 
 	public Product addProductToCatalog(String token, Product product);
+	
+	public Product getProductById(Integer id);
 
 	/*public Product getProductFromCatalogById(Integer id);
 

@@ -12,11 +12,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
 
 @RestController
+@RequestMapping("/api/v1")
 public class ProductController {
 
 	@Autowired
@@ -32,6 +34,19 @@ public class ProductController {
 		if (tokenService.validateToken(token) && "seller".equalsIgnoreCase(usertype)) {
 			Product prod = pService.addProductToCatalog(token, product);
 			return new ResponseEntity<Product>(prod, HttpStatus.CREATED);
+		} else {
+			return ResponseEntity.status(401).body("Invalid Details");
+		}
+
+	}
+	
+	@GetMapping("/product/{id}")
+	public ResponseEntity<?> getProductById(@RequestHeader("Authorization") String token,
+			@RequestHeader("Usertype") String usertype,@PathVariable("id") Integer productId) {
+
+		if (tokenService.validateToken(token) && "seller".equalsIgnoreCase(usertype)) {
+			String prodName = pService.getProductById(productId).getProductName();
+			return new ResponseEntity<String>(prodName, HttpStatus.OK);
 		} else {
 			return ResponseEntity.status(401).body("Invalid Details");
 		}
