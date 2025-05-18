@@ -41,12 +41,25 @@ public class ProductController {
 	}
 	
 	@GetMapping("/product/{id}")
-	public ResponseEntity<?> getProductById(@RequestHeader("Authorization") String token,
+	public ResponseEntity<?> getProductNameById(@RequestHeader("Authorization") String token,
 			@RequestHeader("Usertype") String usertype,@PathVariable("id") Integer productId) {
 
 		if (tokenService.validateToken(token) && "seller".equalsIgnoreCase(usertype)) {
 			String prodName = pService.getProductById(productId).getProductName();
 			return new ResponseEntity<String>(prodName, HttpStatus.OK);
+		} else {
+			return ResponseEntity.status(401).body("Invalid Details");
+		}
+
+	}
+	
+	@GetMapping("/productbyid/{id}")
+	public ResponseEntity<?> getProductById(@RequestHeader("Authorization") String token,
+			@RequestHeader("Usertype") String usertype,@PathVariable("id") Integer productId) {
+
+		if (tokenService.validateToken(token) && "customer".equalsIgnoreCase(usertype)) {
+			Product prod = pService.getProductById(productId);
+			return new ResponseEntity<Product>(prod, HttpStatus.OK);
 		} else {
 			return ResponseEntity.status(401).body("Invalid Details");
 		}
