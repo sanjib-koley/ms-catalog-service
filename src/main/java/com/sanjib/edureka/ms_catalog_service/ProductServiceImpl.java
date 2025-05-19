@@ -35,6 +35,10 @@ public class ProductServiceImpl implements ProductService {
 	public Product getProductByName(String name) {
 		return productReository.findProductByProductName(name);
 	}
+	
+	public Product updateProduct(Product product) {
+		return productReository.save(product);
+	}
 /*
 	@Override
 	public Product getProductFromCatalogById(Integer id)  {

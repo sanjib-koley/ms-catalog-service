@@ -46,10 +46,9 @@ public class Product {
 	private String description;
 	
 	
-	@NotNull
 	@Min(value = 0)
-	@Column(name = "quantity", nullable = false)
-	private Integer quantity;
+	@Column(name = "quantity", nullable = true)
+	private Integer quantity=0;
 
 	@Enumerated(EnumType.STRING)
 	private CategoryEnum category;

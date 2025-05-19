@@ -77,6 +77,48 @@ public class ProductController {
 			return ResponseEntity.status(401).body("Invalid Details");
 		}
 	}
+	
+	@PutMapping("/add/quantity/{id}/{quantity}")
+	public ResponseEntity<?> addProductQuantity(@RequestHeader("Authorization") String token,
+			@RequestHeader("Usertype") String usertype,@PathVariable("id") Integer productId,@PathVariable("quantity") Integer quantity) {
+
+		if (tokenService.validateToken(token) && "seller".equalsIgnoreCase(usertype)) {
+			Product prod = pService.getProductById(productId);
+			prod.setQuantity(prod.getQuantity()+quantity);
+			if(prod.getQuantity()>0) {
+				prod.setStatus(ProductStatus.AVAILABLE);
+			}
+			pService.updateProduct(prod);
+			return new ResponseEntity<Integer>(prod.getQuantity(), HttpStatus.OK);
+		} else {
+			return ResponseEntity.status(401).body("Invalid Details");
+		}
+	}
+	
+	@PutMapping("/reduce/quantity/{id}/{quantity}")
+	public ResponseEntity<?> reduceProductQuantity(@RequestHeader("Authorization") String token,
+			@RequestHeader("Usertype") String usertype,@PathVariable("id") Integer productId,@PathVariable("quantity") Integer quantity) {
+
+		if (tokenService.validateToken(token) && "customer".equalsIgnoreCase(usertype)) {
+			Product prod = pService.getProductById(productId);
+			
+			if(quantity<=prod.getQuantity()) {
+				
+				prod.setQuantity(prod.getQuantity()-quantity);
+				if(prod.getQuantity()<0) {
+					prod.setStatus(ProductStatus.OUTOFSTOCK);
+				}
+				pService.updateProduct(prod);
+				return new ResponseEntity<Integer>(prod.getQuantity(), HttpStatus.OK);
+			}else {
+				return ResponseEntity.status(500).body("Product Quantity Greater than Available Stock");
+			}
+		} else {
+			return ResponseEntity.status(401).body("Invalid Details!");
+		}
+	}
+	
+	
 
 	// This method gets the product which needs to be added to the cart returns
 	// product

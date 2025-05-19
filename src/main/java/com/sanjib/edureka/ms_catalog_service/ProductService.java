@@ -8,6 +8,8 @@ public interface ProductService {
 	
 	public Product getProductByName(String name);
 	
+	public Product updateProduct(Product product);
+	
 
 	/*public Product getProductFromCatalogById(Integer id);
 
