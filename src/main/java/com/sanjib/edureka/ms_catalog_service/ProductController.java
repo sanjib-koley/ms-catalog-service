@@ -65,6 +65,18 @@ public class ProductController {
 		}
 
 	}
+	
+	@GetMapping("/productbyname/{name}")
+	public ResponseEntity<?> getProductByName(@RequestHeader("Authorization") String token,
+			@RequestHeader("Usertype") String usertype,@PathVariable("name") String productName) {
+
+		if (tokenService.validateToken(token) && "customer".equalsIgnoreCase(usertype)) {
+			Product prod = pService.getProductByName(productName);
+			return new ResponseEntity<Product>(prod, HttpStatus.OK);
+		} else {
+			return ResponseEntity.status(401).body("Invalid Details");
+		}
+	}
 
 	// This method gets the product which needs to be added to the cart returns
 	// product

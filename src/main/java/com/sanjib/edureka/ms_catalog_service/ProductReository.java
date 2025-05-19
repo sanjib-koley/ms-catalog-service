@@ -9,6 +9,8 @@ public interface ProductReository extends JpaRepository<Product, Integer> {
 	
 	public Product findProductByProductId(Integer productId);
 	
+	public Product findProductByProductName(String productName);
+	
 	
 	//public List<Product> getAllProductsInACategory(@Param("catenum") CategoryEnum catenum);
 	

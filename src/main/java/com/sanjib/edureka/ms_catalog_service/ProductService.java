@@ -5,6 +5,9 @@ public interface ProductService {
 	public Product addProductToCatalog(String token, Product product);
 	
 	public Product getProductById(Integer id);
+	
+	public Product getProductByName(String name);
+	
 
 	/*public Product getProductFromCatalogById(Integer id);
 
