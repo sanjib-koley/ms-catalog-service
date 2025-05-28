@@ -12,6 +12,7 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
+import lombok.Builder.Default;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -54,7 +55,7 @@ public class Product {
 	private CategoryEnum category;
 
 	@Enumerated(EnumType.STRING)
-	private ProductStatus status;
+	private ProductStatus status = ProductStatus.OUTOFSTOCK;
 
 	@Column(name = "seller_id", nullable = false)
 	private Long sellerId;

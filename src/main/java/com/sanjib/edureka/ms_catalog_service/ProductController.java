@@ -105,7 +105,7 @@ public class ProductController {
 			if(quantity<=prod.getQuantity()) {
 				
 				prod.setQuantity(prod.getQuantity()-quantity);
-				if(prod.getQuantity()<0) {
+				if(prod.getQuantity()<=0) {
 					prod.setStatus(ProductStatus.OUTOFSTOCK);
 				}
 				pService.updateProduct(prod);

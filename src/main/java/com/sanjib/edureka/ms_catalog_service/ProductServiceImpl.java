@@ -1,8 +1,5 @@
 package com.sanjib.edureka.ms_catalog_service;
 
-import java.util.List;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,13 +15,10 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public Product addProductToCatalog(String token, Product product) {
-
-		Product prod = null;
 		Long sellerId = tokenService.getUserIdFromToken(token);
 		product.setSellerId(sellerId);
 		productReository.save(product);
-
-		return prod;
+		return product;
 	}
 	
 	@Override
